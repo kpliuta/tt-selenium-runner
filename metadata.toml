@@ -1,0 +1,33 @@
+[general]
+id = "selenium_runner"
+name = "Selenium Runner"
+description = "Manages a proot-distro Ubuntu container with VNC to execute Selenium-based tasks"
+version = "0.1.0"
+app_min_version = ">=0.1.0"
+
+[[property]]
+name = "upgrade_on_startup"
+description = "Run apt-get upgrade during container initialization"
+input-type = "radio"
+optional = false
+options = ["true", "false"]
+default = "false"
+
+[[task-validator]]
+command = "test -f {task_path}/pyproject.toml"
+description = "Task must be a valid Poetry project"
+
+[[task-validator]]
+command = "test -f {task_path}/main.py"
+description = "Task must have a main.py entry point"
+
+[[task-validator]]
+command = "python scripts/validate_selenium_dependency.py {task_path}"
+description = "Task must have selenium as a Poetry dependency"
+
+[exec]
+initialization = "python scripts/initialization.py"
+before-exec = "python scripts/before_exec.py {runner_path}"
+before-task = "python scripts/before_task.py {runner_path} {task_dir_name}"
+task-exec = "python scripts/task_exec.py {runner_path} {task_dir_name}"
+after-exec = "python scripts/after_exec.py {runner_path}"

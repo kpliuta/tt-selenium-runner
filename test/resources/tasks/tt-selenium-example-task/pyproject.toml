@@ -1,0 +1,19 @@
+[project]
+name = "tt-selenium-example-task"
+version = "0.1.0"
+description = "Example Selenium task for tt-selenium-runner"
+authors = [
+    { name = "kpliuta", email = "9212935+kpliuta@users.noreply.github.com" }
+]
+license = "MIT"
+requires-python = ">=3.11"
+dependencies = [
+    "selenium>=4.15.0",
+]
+
+[tool.poetry]
+package-mode = false
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"

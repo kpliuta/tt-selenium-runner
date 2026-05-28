@@ -1,0 +1,23 @@
+[project]
+name = "tt-selenium-runner"
+version = "0.1.0"
+description = "termux-tasker runner that manages a proot-distro Ubuntu container with VNC to execute Selenium-based tasks"
+authors = [
+    { name = "kpliuta", email = "9212935+kpliuta@users.noreply.github.com" }
+]
+license = "MIT"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "selenium>=4.15.0",
+]
+
+[tool.poetry]
+package-mode = false
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"

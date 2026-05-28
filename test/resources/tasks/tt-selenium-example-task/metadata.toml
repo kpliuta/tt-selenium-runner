@@ -1,0 +1,8 @@
+[general]
+id = "tt-selenium-example-task"
+name = "Selenium Screenshot Task"
+description = "Opens a URL, verifies it loads, and saves a screenshot"
+version = "0.1.0"
+runner_id = "selenium_runner"
+runner_min_version = ">=0.1.0"
+default_timeout = "1m"
