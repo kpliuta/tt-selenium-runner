@@ -19,8 +19,11 @@ def _is_proot_distro_installed() -> bool:
 
 
 def _is_ubuntu_installed() -> bool:
-    result = subprocess.run(["proot-distro", "list"], capture_output=True, text=True)
-    return "ubuntu" in result.stdout
+    result = subprocess.run(
+        ["proot-distro", "login", "ubuntu", "--", "true"],
+        capture_output=True, timeout=30,
+    )
+    return result.returncode == 0
 
 
 def main() -> None:
