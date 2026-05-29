@@ -51,6 +51,7 @@ class ProotManager:
         if not self.in_fifo.exists():
             raise ProotError("in.fifo not found — is the proot session running?")
 
+        print(f"Sending command: {command}", file=sys.stderr)
         try:
             with open(self.in_fifo, "w") as f:
                 f.write(command + "\n")
@@ -83,7 +84,7 @@ class ProotManager:
         """Start proot-distro in the background with the listener script.
 
         Creates fifos, starts the proot-distro process, and begins logging
-        its stdout. Returns the Popen object. Raises ProotError on failure.
+        its stdout. Raises ProotError on failure.
         """
         self._clean_fifos()
         self._create_fifos()
@@ -116,7 +117,7 @@ class ProotManager:
             self.stdout_path.parent.mkdir(parents=True, exist_ok=True)
             with open(self.stdout_path, "a") as log:
                 for line in iter(proc.stdout.readline, b""):
-                    ts = datetime.now().strftime("[%Y-%m-%d %H:%M:%S] [proot]")
+                    ts = datetime.now().strftime("[%Y-%m-%d %H:%M:%S] [container]")
                     log.write(f"{ts} {line.decode(errors='replace').rstrip()}\n")
                     log.flush()
 
@@ -143,8 +144,9 @@ class ProotManager:
 
         try:
             pid = int(self.pid_file.read_text().strip())
-        except (ValueError, FileNotFoundError) as e:
-            raise ProotError(f"Invalid pid file: {e}") from e
+        except (ValueError, FileNotFoundError):
+            self._clean_fifos()
+            return
 
         start = time.time()
         while time.time() - start < timeout:
@@ -157,15 +159,14 @@ class ProotManager:
         print(f"Warning: proot process {pid} not responding, sending SIGTERM", file=sys.stderr)
         try:
             os.kill(pid, signal.SIGTERM)
-        except ProcessLookupError:
+        except (ProcessLookupError, OSError):
             pass
         time.sleep(2)
-        try:
-            os.kill(pid, signal.SIGKILL)
-        except ProcessLookupError:
-            pass
-        print(f"Warning: proot process {pid} forcefully terminated", file=sys.stderr)
 
+        print(f"Warning: proot process {pid} not responding, sending SIGKILL", file=sys.stderr)
+        os.kill(pid, signal.SIGKILL)
+
+        self.pid_file.unlink(missing_ok=True)
         self._clean_fifos()
 
     @staticmethod

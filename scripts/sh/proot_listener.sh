@@ -13,9 +13,10 @@ done
 while true; do
     if read -r cmd < "$in_fifo"; then
         if [ "$cmd" = "__shutdown__" ]; then
+            echo "0" > "$out_fifo"
             break
         fi
-        eval "$cmd" >> /mnt/runner/stdout 2>&1
+        eval "$cmd"
         status=$?
         echo "$status" > "$out_fifo"
     fi

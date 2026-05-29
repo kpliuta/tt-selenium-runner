@@ -20,12 +20,10 @@ def main() -> None:
 
     runner_path = Path(sys.argv[1])
     manager = ProotManager(runner_path)
-
     manager.start_proot()
-    print(f"Started proot session (PID from {manager.pid_file})")
 
     # Verify container is ready by sending a simple echo command
-    manager.send_command("echo ready", timeout=60)
+    manager.send_command("echo 'Container is ready'", timeout=60)
 
     # Install/update container packages (idempotent — skips already-installed)
     print("Ensuring container packages are installed...")
