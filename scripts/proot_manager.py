@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+import re
 import signal
 import subprocess
 import sys
@@ -106,6 +107,7 @@ class ProotManager:
                 cmd,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT,
+                # ignore SIGINT so Ctrl+C on the host doesn't kill the container
                 preexec_fn=lambda: signal.signal(signal.SIGINT, signal.SIG_IGN),
             )
         except FileNotFoundError as e:
@@ -115,11 +117,16 @@ class ProotManager:
         def _log_output() -> None:
             assert proc.stdout is not None
             self.stdout_path.parent.mkdir(parents=True, exist_ok=True)
+            # proot-distro emits ANSI escape sequences (\r, [K, color codes) for progress spinners.
+            # Strip them so the log is clean and readable.
+            ansi_escape = re.compile(r"\x1b\[[0-9;]*[a-zA-Z]|\x1b\][0-9;]*\x07|\r")
             with open(self.stdout_path, "a") as log:
                 for line in iter(proc.stdout.readline, b""):
-                    ts = datetime.now().strftime("[%Y-%m-%d %H:%M:%S] [container]")
-                    log.write(f"{ts} {line.decode(errors='replace').rstrip()}\n")
-                    log.flush()
+                    text = ansi_escape.sub("", line.decode(errors="replace")).strip()
+                    if text:
+                        ts = datetime.now().strftime("[%Y-%m-%d %H:%M:%S] [container]")
+                        log.write(f"{ts} {text}\n")
+                        log.flush()
 
         thread = threading.Thread(target=_log_output, daemon=True)
         thread.start()
@@ -164,13 +171,17 @@ class ProotManager:
         time.sleep(2)
 
         print(f"Warning: proot process {pid} not responding, sending SIGKILL", file=sys.stderr)
-        os.kill(pid, signal.SIGKILL)
+        try:
+            os.kill(pid, signal.SIGKILL)
+        except (ProcessLookupError, OSError):
+            pass
 
         self.pid_file.unlink(missing_ok=True)
         self._clean_fifos()
 
     @staticmethod
     def _is_process_alive(pid: int) -> bool:
+        # kill -0 only checks if the process exists; doesn't send a signal
         try:
             result = subprocess.run(
                 ["kill", "-0", str(pid)],

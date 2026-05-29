@@ -4,6 +4,8 @@ import os
 import sys
 from pathlib import Path
 
+# termux-tasker runs scripts with cwd=runner_path, adding only scripts/ to sys.path.
+# Add the runner root so scripts.xxx imports resolve correctly.
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from scripts.proot_manager import ProotManager

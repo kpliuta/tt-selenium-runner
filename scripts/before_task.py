@@ -3,6 +3,8 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
+# termux-tasker runs scripts with cwd=runner_path, adding only scripts/ to sys.path.
+# Add the runner root so scripts.xxx imports resolve correctly.
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from scripts.proot_manager import ProotManager
@@ -23,7 +25,7 @@ def main() -> None:
         sys.exit(1)
 
     cmd = f"cd /mnt/runner/tasks/{task_dir_name} && poetry install"
-    print(f"Installing task dependencies: {cmd}")
+    print(f"Installing task dependencies...")
     manager.send_command(cmd)
 
     sys.exit(0)

@@ -3,6 +3,8 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
+# termux-tasker runs scripts with cwd=runner_path, adding only scripts/ to sys.path.
+# Add the runner root so scripts.xxx imports resolve correctly.
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from scripts.proot_manager import ProotManager
@@ -30,7 +32,7 @@ def main() -> None:
         f"MNT_OUTPUT_DIR={output_dir} "
         f"poetry run python main.py"
     )
-    print(f"Running task: {cmd}")
+    print(f"Running task...")
     manager.send_command(cmd, timeout=600)
 
     sys.exit(0)

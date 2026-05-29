@@ -13,6 +13,7 @@ done
 while true; do
     if read -r cmd < "$in_fifo"; then
         if [ "$cmd" = "__shutdown__" ]; then
+            # respond with success status end break the cmd loop immediately on shutdown
             echo "0" > "$out_fifo"
             break
         fi
