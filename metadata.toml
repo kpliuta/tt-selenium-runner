@@ -14,6 +14,14 @@ optional = false
 options = ["true", "false"]
 default = "false"
 
+[[property]]
+name = "terminate_existing_vnc"
+description = "Terminate any running VNC server before starting a new one"
+input-type = "radio"
+optional = false
+options = ["true", "false"]
+default = "false"
+
 [[task-validator]]
 command = "test -f {task_path}/pyproject.toml"
 description = "Task must be a valid Poetry project"
@@ -23,12 +31,17 @@ command = "test -f {task_path}/main.py"
 description = "Task must have a main.py entry point"
 
 [[task-validator]]
-command = "python scripts/validate_selenium_dependency.py {task_path}"
+command = "python scripts/validators/selenium.py {task_path}"
 description = "Task must have selenium as a Poetry dependency"
 
+[[task-validator]]
+command = "python scripts/validators/webdriver_manager.py {task_path}"
+description = "Task must have webdriver-manager as a Poetry dependency"
+
 [exec]
-initialization = "python scripts/initialization.py"
-before-exec = "python scripts/before_exec.py {runner_path}"
-before-task = "python scripts/before_task.py {runner_path} {task_dir_name}"
-task-exec = "python scripts/task_exec.py {runner_path} {task_dir_name}"
-after-exec = "python scripts/after_exec.py {runner_path}"
+initialization = "poetry install && poetry run python -m scripts.initialization"
+before-exec = "poetry run python -m scripts.before_exec {runner_path}"
+before-task = "poetry run python -m scripts.before_task {runner_path} {task_dir_name}"
+task-exec = "poetry run python -m scripts.task_exec {runner_path} {task_dir_name}"
+after-exec = "poetry run python -m scripts.after_exec {runner_path}"
+termination = "poetry run python -m scripts.termination"

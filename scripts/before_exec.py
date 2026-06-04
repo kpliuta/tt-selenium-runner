@@ -4,20 +4,17 @@ import os
 import sys
 from pathlib import Path
 
-# termux-tasker runs scripts with cwd=runner_path, adding only scripts/ to sys.path.
-# Add the runner root so scripts.xxx imports resolve correctly.
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-
+from scripts import log
 from scripts.proot_manager import ProotManager
 
 
-def _should_upgrade() -> bool:
-    return os.environ.get("VAR_UPGRADE_ON_STARTUP", "false") == "true"
+def _env_bool(name: str) -> bool:
+    return os.environ.get(name, "false") == "true"
 
 
 def main() -> None:
     if len(sys.argv) < 2:
-        print("Usage: python before_exec.py <runner_path>", file=sys.stderr)
+        log("Usage: python before_exec.py <runner_path>")
         sys.exit(1)
 
     runner_path = Path(sys.argv[1])
@@ -28,19 +25,23 @@ def main() -> None:
     manager.send_command("echo 'Container is ready'", timeout=60)
 
     # Install/update container packages (idempotent — skips already-installed)
-    print("Ensuring container packages are installed...")
-    upgrade = str(_should_upgrade()).lower()
+    log("Ensuring container packages are installed...")
+    upgrade = str(_env_bool("VAR_UPGRADE_ON_STARTUP")).lower()
     manager.send_command(f"sh /mnt/runner/scripts/sh/setup_container.sh {upgrade}")
 
     # One-time VNC password and xstartup configuration
-    print("Configuring VNC password and xstartup...")
+    log("Configuring VNC password and xstartup...")
     manager.send_command("sh /mnt/runner/scripts/sh/setup_vnc.sh", timeout=30)
 
+    # Optionally terminate any running VNC server before starting a new one
+    if _env_bool("VAR_TERMINATE_EXISTING_VNC"):
+        log("Terminating existing VNC server...")
+        manager.send_command("sh /mnt/runner/scripts/sh/terminate_vnc.sh", timeout=60)
+
     # Start VNC server inside the container
-    print("Starting VNC server inside container...")
+    log("Starting VNC server inside container...")
     manager.send_command("sh /mnt/runner/scripts/sh/start_vnc.sh", timeout=60)
 
-    print("VNC server started successfully")
     sys.exit(0)
 
 

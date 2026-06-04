@@ -7,7 +7,7 @@ from pathlib import Path
 
 def main() -> None:
     if len(sys.argv) < 2:
-        print("Usage: python validate_selenium_dependency.py <task_path>", file=sys.stderr)
+        print("Usage: python scripts/validators/selenium.py <task_path>", file=sys.stderr)
         sys.exit(1)
 
     task_path = Path(sys.argv[1])
@@ -19,7 +19,6 @@ def main() -> None:
 
     content = pyproject.read_text()
 
-    # Check for selenium dependency in [project.dependencies] or [tool.poetry.dependencies]
     dep_patterns = [
         re.compile(r'^selenium\s*[>=<]', re.MULTILINE),
         re.compile(r'"selenium\s*[>=<]', re.MULTILINE),
