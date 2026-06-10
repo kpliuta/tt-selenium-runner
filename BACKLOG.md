@@ -8,7 +8,6 @@
 
 ## Todo
 
-* `high`   Bug: Firefox is installed as a snap stab by default and need to be installed from the official Mozilla repo
 * `high`   Bug: Ghost proot_listener.sh process is still hanging in the process list even though runner is terminated
 * `high`   Cover the codebase with unit tests
 * `medium` Add integration with mypy and autoflake
@@ -23,7 +22,7 @@
 
 ## Done
 
-* —
+* `high`   Bug: Firefox is installed as a snap stab by default and need to be installed from the official Mozilla repo
 
 ## Cancelled
 

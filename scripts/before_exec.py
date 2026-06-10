@@ -29,6 +29,10 @@ def main() -> None:
     upgrade = str(_env_bool("VAR_UPGRADE_ON_STARTUP")).lower()
     manager.send_command(f"sh /mnt/runner/scripts/sh/setup_container.sh {upgrade}")
 
+    # Install/update Firefox from official Mozilla repo
+    log("Ensuring Firefox is installed from official Mozilla repo...")
+    manager.send_command(f"sh /mnt/runner/scripts/sh/install_firefox.sh {upgrade}")
+
     # One-time VNC password and xstartup configuration
     log("Configuring VNC password and xstartup...")
     manager.send_command("sh /mnt/runner/scripts/sh/setup_vnc.sh", timeout=30)

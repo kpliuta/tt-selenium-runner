@@ -19,7 +19,7 @@ if [ "$UPGRADE" = "true" ]; then
 fi
 
 echo "Checking container dependencies..."
-for pkg in wget xfce4 dbus-x11 tightvncserver firefox python3-poetry ffmpeg; do
+for pkg in wget xfce4 dbus-x11 tightvncserver python3-poetry ffmpeg; do
     if ! dpkg -s "$pkg" >/dev/null 2>&1; then
         echo "  Installing $pkg..."
         apt-get install -y -qq "$pkg"
