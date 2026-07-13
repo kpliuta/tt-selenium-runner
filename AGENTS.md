@@ -10,10 +10,11 @@
 [//]: # (workflow)
 
 - Ask before starting if anything is unclear.
-- Cover new/modified logic with unit tests; run after each change — must be green.
+- FOLLOW TDD. Cover new/modified logic with unit tests; run after each change — must be green.
 - Delete all unused code (methods, classes, files, imports).
 - Run `poetry run mypy scripts/` and `poetry run autoflake --remove-all-unused-imports --ignore-init-module-imports --in-place --recursive scripts/` after every change — both must pass/be clean.
 - Update README.md for user-visible changes.
+- Update CHANGELOG.md (add entries under `## [Unreleased]`) and BACKLOG.md (move completed items, update status) for every commit.
 - Use all the skills under .agent/skills/* where applicable.
 - The application (termux-tasker) that running this runner resides in ../termux-tasker. You can check it any time if something is not clear.
 - This runner was created based on sh scripts in ../termux-web-scraper. You can check it any time if something is not clear.

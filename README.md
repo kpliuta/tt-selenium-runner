@@ -31,3 +31,26 @@ Selenium-based Python tasks on Android via Termux.
 | `start_vnc.sh`       | `scripts/sh/` | Start VNC server with configurable geometry (`VNC_GEOMETRY`, default `1920x1080`)                        |
 | `terminate_vnc.sh`   | `scripts/sh/` | Gracefully terminate a running VNC server (cleans up lock, PID, and log files)                           |
 | `proot_listener.sh`  | `scripts/sh/` | Fifo-based command listener that runs inside the container                                               |
+
+## Development
+
+Install dev dependencies (includes mypy and autoflake):
+
+```bash
+poetry install --extras dev
+```
+
+Run type checking and unused imports check:
+
+```bash
+poetry run mypy scripts/
+poetry run autoflake --remove-all-unused-imports --ignore-init-module-imports --check --recursive scripts/
+```
+
+## CI & Release
+
+This project uses GitHub Actions for CI and automated releases. PRs must follow [Conventional Commits](https://www.conventionalcommits.org/) format — the PR title determines the version bump on merge (`fix:` → patch, `feat:` → minor, `feat!:` → major).
+
+When a PR is merged to `main` via squash merge, the release workflow automatically bumps the version, updates the changelog, creates a git tag, and publishes a GitHub Release.
+
+For full details, see **[CI-RELEASE.md](CI-RELEASE.md)**.
