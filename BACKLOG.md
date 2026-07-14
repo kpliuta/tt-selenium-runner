@@ -22,8 +22,7 @@
 
 ## Done
 
-* `high`   Bug: Firefox is installed as a snap stab by default and need to be installed from the official Mozilla repo
-* `medium` Add integration with mypy and autoflake
+* —
 
 ## Cancelled
 
