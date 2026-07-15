@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.2] - 2026-07-15
+
 ### Fixed
 
 - metadata.toml version now stays in sync with pyproject.toml during releases
