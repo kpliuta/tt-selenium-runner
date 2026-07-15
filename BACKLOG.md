@@ -8,7 +8,6 @@
 
 ## Todo
 
-* `high`   Bug: metadata.toml version should be sync with pyproject.toml version (and with tag version respectivelly)
 * `high`   Bug: Ghost proot_listener.sh process is still hanging in the process list even though runner is terminated
 * `high`   Cover the codebase with unit tests
 * `medium` Add a property to specify proot container name
