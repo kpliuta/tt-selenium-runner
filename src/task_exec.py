@@ -3,8 +3,8 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
-from scripts import log
-from scripts.proot_manager import ProotManager
+from src import log
+from src.proot_manager import ProotManager
 
 
 def main() -> None:
@@ -27,7 +27,7 @@ def main() -> None:
     log("Running task...")
     manager.send_command(f"cd {mnt_task}", 10)
     manager.send_command(f"export MNT_OUTPUT_DIR={output_dir}", 10)
-    manager.send_command("poetry run python main.py", timeout=600)
+    manager.send_command("poetry run python src/main.py", timeout=600)
 
     sys.exit(0)
 

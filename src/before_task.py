@@ -3,8 +3,8 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
-from scripts import log
-from scripts.proot_manager import ProotManager
+from src import log
+from src.proot_manager import ProotManager
 
 
 def main() -> None:

@@ -27,21 +27,21 @@ command = "test -f {task_path}/pyproject.toml"
 description = "Task must be a valid Poetry project"
 
 [[task-validator]]
-command = "test -f {task_path}/main.py"
-description = "Task must have a main.py entry point"
+command = "test -f {task_path}/src/main.py"
+description = "Task must have a src/main.py entry point"
 
 [[task-validator]]
-command = "python scripts/validators/selenium.py {task_path}"
+command = "python src/validators/selenium.py {task_path}"
 description = "Task must have selenium as a Poetry dependency"
 
 [[task-validator]]
-command = "python scripts/validators/webdriver_manager.py {task_path}"
+command = "python src/validators/webdriver_manager.py {task_path}"
 description = "Task must have webdriver-manager as a Poetry dependency"
 
 [exec]
-initialization = "poetry install && poetry run python -m scripts.initialization"
-before-exec = "poetry run python -m scripts.before_exec {runner_path}"
-before-task = "poetry run python -m scripts.before_task {runner_path} {task_dir_name}"
-task-exec = "poetry run python -m scripts.task_exec {runner_path} {task_dir_name}"
-after-exec = "poetry run python -m scripts.after_exec {runner_path}"
-termination = "poetry run python -m scripts.termination"
+initialization = "poetry install && poetry run python -m src.initialization"
+before-exec = "poetry run python -m src.before_exec {runner_path}"
+before-task = "poetry run python -m src.before_task {runner_path} {task_dir_name}"
+task-exec = "poetry run python -m src.task_exec {runner_path} {task_dir_name}"
+after-exec = "poetry run python -m src.after_exec {runner_path}"
+termination = "poetry run python -m src.termination"

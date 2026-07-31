@@ -10,7 +10,7 @@ Selenium-based Python tasks on Android via Termux.
 1. **initialization** — Install `proot-distro` and the Ubuntu container on the host (one-time)
 2. **before-exec** — Start proot container with fifo listener, ensure packages are installed, install/upgrade Firefox from official Mozilla repo, configure VNC password/xstartup, start VNC server
 3. **before-task** — `poetry install` on the task directory inside the container
-4. **task-exec** — `poetry run` on the task with `MNT_OUTPUT_DIR` env var
+4. **task-exec** — `poetry run python src/main.py` on the task with `MNT_OUTPUT_DIR` env var
 5. **after-exec** — Send shutdown command to proot container, wait for graceful exit
 6. **termination** — Placeholder (currently no-op)
 
@@ -23,14 +23,14 @@ Selenium-based Python tasks on Android via Termux.
 
 ## Shell scripts
 
-| Script               | Location      | Purpose                                                                                                  |
-|----------------------|---------------|----------------------------------------------------------------------------------------------------------|
-| `setup_container.sh` | `scripts/sh/` | Install/verify container packages (`xfce4`, `tightvncserver`, `python3-poetry`, etc.)                    |
-| `install_firefox.sh` | `scripts/sh/` | Install/upgrade Firefox from the official Mozilla repository (avoids Ubuntu's snap transitional package) |
-| `setup_vnc.sh`       | `scripts/sh/` | One-time VNC password (default: `termux`) and `xstartup` creation                                        |
-| `start_vnc.sh`       | `scripts/sh/` | Start VNC server with configurable geometry (`VNC_GEOMETRY`, default `1920x1080`)                        |
-| `terminate_vnc.sh`   | `scripts/sh/` | Gracefully terminate a running VNC server (cleans up lock, PID, and log files)                           |
-| `proot_listener.sh`  | `scripts/sh/` | Fifo-based command listener that runs inside the container                                               |
+| Script               | Location | Purpose                                                                                                  |
+|----------------------|----------|----------------------------------------------------------------------------------------------------------|
+| `setup_container.sh` | `sh/`    | Install/verify container packages (`xfce4`, `tightvncserver`, `python3-poetry`, etc.)                    |
+| `install_firefox.sh` | `sh/`    | Install/upgrade Firefox from the official Mozilla repository (avoids Ubuntu's snap transitional package) |
+| `setup_vnc.sh`       | `sh/`    | One-time VNC password (default: `termux`) and `xstartup` creation                                        |
+| `start_vnc.sh`       | `sh/`    | Start VNC server with configurable geometry (`VNC_GEOMETRY`, default `1920x1080`)                        |
+| `terminate_vnc.sh`   | `sh/`    | Gracefully terminate a running VNC server (cleans up lock, PID, and log files)                           |
+| `proot_listener.sh`  | `sh/`    | Fifo-based command listener that runs inside the container                                               |
 
 ## Development
 
@@ -43,8 +43,8 @@ poetry install --extras dev
 Run type checking and unused imports check:
 
 ```bash
-poetry run mypy scripts/
-poetry run autoflake --remove-all-unused-imports --ignore-init-module-imports --check --recursive scripts/
+poetry run mypy src/
+poetry run autoflake --remove-all-unused-imports --ignore-init-module-imports --check --recursive src/
 ```
 
 ## CI & Release
