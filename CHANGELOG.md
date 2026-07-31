@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Moved Python source from `scripts/` to `src/` and shell scripts from `scripts/sh/` to `sh/`.
+- Task entry point is now `src/main.py` (task-exec command and entry point task validator updated).
+
 ## [0.1.3] - 2026-07-29
 
 ### Added

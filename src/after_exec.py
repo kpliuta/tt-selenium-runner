@@ -3,13 +3,13 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
-from scripts import log
-from scripts.proot_manager import ProotManager
+from src import log
+from src.proot_manager import ProotManager
 
 
 def main() -> None:
     if len(sys.argv) < 2:
-        log("Usage: python -m scripts.after_exec <runner_path>")
+        log("Usage: python -m src.after_exec <runner_path>")
         sys.exit(1)
 
     runner_path = Path(sys.argv[1])

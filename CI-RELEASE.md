@@ -163,10 +163,10 @@ the PR can be merged.
 
 ### What is checked
 
-1. **Type checking** — `poetry run mypy scripts/`
+1. **Type checking** — `poetry run mypy src/`
    - No type errors allowed
 
-2. **Unused imports** — `poetry run autoflake --remove-all-unused-imports --ignore-init-module-imports --check --recursive scripts/`
+2. **Unused imports** — `poetry run autoflake --remove-all-unused-imports --ignore-init-module-imports --check --recursive src/`
    - No unused imports in the source code
 
 ---

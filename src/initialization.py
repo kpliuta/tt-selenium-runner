@@ -3,7 +3,7 @@ from __future__ import annotations
 import subprocess
 import sys
 
-from scripts import log
+from src import log
 
 
 def _run(cmd: list[str], check: bool = True, timeout: int | None = None) -> subprocess.CompletedProcess:

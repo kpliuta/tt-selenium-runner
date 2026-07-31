@@ -19,6 +19,6 @@ jobs:
 #      - name: Run tests
 #        run: poetry run pytest tests/
       - name: Type check
-        run: poetry run mypy scripts/
+        run: poetry run mypy src/
       - name: Unused imports check
-        run: poetry run autoflake --remove-all-unused-imports --ignore-init-module-imports --check --recursive scripts/
+        run: poetry run autoflake --remove-all-unused-imports --ignore-init-module-imports --check --recursive src/

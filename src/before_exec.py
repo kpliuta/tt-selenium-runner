@@ -4,8 +4,8 @@ import os
 import sys
 from pathlib import Path
 
-from scripts import log
-from scripts.proot_manager import ProotManager
+from src import log
+from src.proot_manager import ProotManager
 
 
 def _env_bool(name: str) -> bool:
@@ -27,24 +27,24 @@ def main() -> None:
     # Install/update container packages (idempotent — skips already-installed)
     log("Ensuring container packages are installed...")
     upgrade = str(_env_bool("VAR_UPGRADE_ON_STARTUP")).lower()
-    manager.send_command(f"sh /mnt/runner/scripts/sh/setup_container.sh {upgrade}")
+    manager.send_command(f"sh /mnt/runner/sh/setup_container.sh {upgrade}")
 
     # Install/update Firefox from official Mozilla repo
     log("Ensuring Firefox is installed from official Mozilla repo...")
-    manager.send_command(f"sh /mnt/runner/scripts/sh/install_firefox.sh {upgrade}")
+    manager.send_command(f"sh /mnt/runner/sh/install_firefox.sh {upgrade}")
 
     # One-time VNC password and xstartup configuration
     log("Configuring VNC password and xstartup...")
-    manager.send_command("sh /mnt/runner/scripts/sh/setup_vnc.sh", timeout=30)
+    manager.send_command("sh /mnt/runner/sh/setup_vnc.sh", timeout=30)
 
     # Optionally terminate any running VNC server before starting a new one
     if _env_bool("VAR_TERMINATE_EXISTING_VNC"):
         log("Terminating existing VNC server...")
-        manager.send_command("sh /mnt/runner/scripts/sh/terminate_vnc.sh", timeout=60)
+        manager.send_command("sh /mnt/runner/sh/terminate_vnc.sh", timeout=60)
 
     # Start VNC server inside the container
     log("Starting VNC server inside container...")
-    manager.send_command("sh /mnt/runner/scripts/sh/start_vnc.sh", timeout=60)
+    manager.send_command("sh /mnt/runner/sh/start_vnc.sh", timeout=60)
 
     sys.exit(0)
 

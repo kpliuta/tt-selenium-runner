@@ -7,7 +7,7 @@ import threading
 import time
 from pathlib import Path
 
-from scripts import log
+from src import log
 
 class ProotError(Exception):
     pass
@@ -111,7 +111,7 @@ class ProotManager:
         self._clean_fifos()
         self._create_fifos()
 
-        listener_path = self.runner_path / "scripts" / "sh" / "proot_listener.sh"
+        listener_path = self.runner_path / "sh" / "proot_listener.sh"
         if not listener_path.exists():
             raise ProotError(f"Listener script not found at {listener_path}")
 
@@ -123,9 +123,9 @@ class ProotManager:
         ]
 
         entry = (
-            ["env", *var_env_args, "sh", "/mnt/runner/scripts/sh/proot_listener.sh"]
+            ["env", *var_env_args, "sh", "/mnt/runner/sh/proot_listener.sh"]
             if var_env_args else
-            ["sh", "/mnt/runner/scripts/sh/proot_listener.sh"]
+            ["sh", "/mnt/runner/sh/proot_listener.sh"]
         )
 
         cmd = [
