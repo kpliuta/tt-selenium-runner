@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.4] - 2026-07-31
+
 ### Changed
 
 - Moved Python source from `scripts/` to `src/` and shell scripts from `scripts/sh/` to `sh/`.
