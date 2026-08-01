@@ -1,6 +1,6 @@
 [project]
 name = "tt-selenium-runner"
-version = "0.1.4"
+version = "0.1.5"
 description = "termux-tasker runner that manages a proot-distro Ubuntu container with VNC to execute Selenium-based tasks"
 authors = [
     { name = "kpliuta", email = "9212935+kpliuta@users.noreply.github.com" }
