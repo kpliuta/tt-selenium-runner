@@ -10,7 +10,7 @@ Selenium-based Python tasks on Android via Termux.
 1. **initialization** — Install `proot-distro` and the Ubuntu container on the host (one-time)
 2. **before-exec** — Start proot container with fifo listener, ensure packages are installed, install/upgrade Firefox from official Mozilla repo, configure VNC password/xstartup, start VNC server
 3. **before-task** — `poetry install` on the task directory inside the container
-4. **task-exec** — `poetry run python src/main.py` on the task with `MNT_OUTPUT_DIR` env var
+4. **task-exec** — `poetry run python src/main.py` on the task
 5. **after-exec** — Send shutdown command to proot container, wait for graceful exit
 6. **termination** — Placeholder (currently no-op)
 
