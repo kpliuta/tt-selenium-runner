@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.6] - 2026-08-01
+
 ### Added
 
 - Unit tests for `src/before_exec.py` (`tests/unit/test_before_exec.py`).
