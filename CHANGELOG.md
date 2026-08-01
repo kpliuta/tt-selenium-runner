@@ -8,6 +8,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Unit tests for `src/before_exec.py` (`tests/unit/test_before_exec.py`).
+
+### Fixed
+
+- before-exec now exports `DISPLAY=:1` inside the container before VNC setup, so tasks running in the container share one consolidated display value with the VNC server (previously only VNC scripts defaulted to `:1`, while task processes had no `DISPLAY`).
+
 ## [0.1.5] - 2026-08-01
 
 ### Added

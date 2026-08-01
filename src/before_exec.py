@@ -33,6 +33,9 @@ def main() -> None:
     log("Ensuring Firefox is installed from official Mozilla repo...")
     manager.send_command(f"sh /mnt/runner/sh/install_firefox.sh {upgrade}")
 
+    # Export DISPLAY so VNC scripts run with a known display in the container
+    manager.send_command("export DISPLAY=:1")
+
     # One-time VNC password and xstartup configuration
     log("Configuring VNC password and xstartup...")
     manager.send_command("sh /mnt/runner/sh/setup_vnc.sh", timeout=30)
