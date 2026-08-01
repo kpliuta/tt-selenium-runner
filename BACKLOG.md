@@ -8,6 +8,7 @@
 
 ## Todo
 
+* `high`   Bug: Proot session is still handing after "Proot session shut down" message
 * `high`   Bug: Ghost proot_listener.sh process is still hanging in the process list even though runner is terminated
 * `high`   Cover the codebase with unit tests
 * `medium` Add a property to specify proot container name
