@@ -12,7 +12,7 @@
 - Ask before starting if anything is unclear.
 - FOLLOW TDD. Cover new/modified logic with unit tests; run after each change — must be green.
 - Delete all unused code (methods, classes, files, imports).
-- Run `poetry run mypy src/` and `poetry run autoflake --remove-all-unused-imports --ignore-init-module-imports --in-place --recursive src/` after every change — both must pass/be clean.
+- Run `poetry run pytest tests/` (must be green), `poetry run mypy src/` and `poetry run autoflake --remove-all-unused-imports --ignore-init-module-imports --in-place --recursive src/` after every change — all must pass/be clean.
 - Update README.md for user-visible changes.
 - Update CHANGELOG.md (add entries under `## [Unreleased]`) and BACKLOG.md (move completed items, update status) for every commit.
 - Use all the skills under .agent/skills/* where applicable.

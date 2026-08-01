@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import shlex
 import sys
 from pathlib import Path
 
@@ -22,7 +23,7 @@ def main() -> None:
         sys.exit(1)
 
     log("Installing task dependencies...")
-    manager.send_command(f"cd /mnt/runner/tasks/{task_dir_name}", 10)
+    manager.send_command(f"cd {shlex.quote(f'/mnt/runner/tasks/{task_dir_name}')}", 10)
     manager.send_command("poetry install")
 
     sys.exit(0)

@@ -16,10 +16,15 @@ dev = [
     "webdriver-manager>=4.0.0",
     "mypy>=1.0.0",
     "autoflake>=2.0.0",
+    "pytest>=8.0.0",
 ]
 
 [tool.poetry]
 package-mode = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]

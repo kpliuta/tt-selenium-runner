@@ -16,8 +16,8 @@ jobs:
         run: pip install poetry
       - name: Install dependencies
         run: poetry install --extras dev
-#      - name: Run tests
-#        run: poetry run pytest tests/
+      - name: Run tests
+        run: poetry run pytest tests/
       - name: Type check
         run: poetry run mypy src/
       - name: Unused imports check

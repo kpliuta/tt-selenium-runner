@@ -8,6 +8,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Unit tests for `build_env_prefix` (`tests/unit/test_task_exec.py`).
+- pytest step enabled in CI.
+
+### Fixed
+
+- task-exec now passes both runner and task parameters plus `MNT_OUTPUT_DIR` into the container as a shell-quoted env-assignment command prefix (e.g. `MNT_OUTPUT_DIR=... VAR_1=1 poetry run python src/main.py`), so tasks can read their own properties (`src/main.py` previously only saw runner properties).
+- before-task `cd` now shell-quotes the task dir path, so task directory names containing spaces or shell metacharacters are handled safely.
+
 ## [0.1.4] - 2026-07-31
 
 ### Changed
